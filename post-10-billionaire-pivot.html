@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You Don't Do Business To Get Money — Don Lamarr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f5f0e8;
+    --accent: #c8402a;
+    --muted: #7a7065;
+    --rule: #d4cfc6;
+    --highlight: #f0e6c8;
+    --dark: #1a1510;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* Grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* Nav */
+  nav {
+    border-bottom: 1px solid var(--rule);
+    padding: 16px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    z-index: 100;
+  }
+
+  .nav-home {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+  }
+
+  .nav-links a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* Article layout */
+  article {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Hero */
+  .article-hero {
+    padding: 64px 48px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 64px;
+    align-items: end;
+    padding-bottom: 48px;
+  }
+
+  .article-volume {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .article-series {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .article-series::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .article-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 58px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
+
+  .article-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .article-deck {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 580px;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+
+  .article-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .article-meta-row span { color: var(--ink); }
+
+  .article-hero-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 8px;
+  }
+
+  .aside-block {
+    border: 1px solid var(--rule);
+    padding: 20px;
+  }
+
+  .aside-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .aside-text {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  /* Body */
+  .article-body {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 64px;
+    padding: 56px 48px 80px;
+  }
+
+  .article-content {
+    max-width: 640px;
+  }
+
+  .article-content p {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 28px;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .article-content p.lead {
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  .article-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin: 48px 0 20px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .article-content h2::before {
+    content: '—';
+    color: var(--accent);
+    margin-right: 10px;
+  }
+
+  /* Pull quote */
+  .pull-quote {
+    background: var(--dark);
+    color: #f5f0e8;
+    padding: 40px 48px;
+    margin: 40px -48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pull-quote::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: 32px;
+    font-family: 'Playfair Display', serif;
+    font-size: 160px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+  }
+
+  .pull-quote p {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 24px !important;
+    font-style: italic;
+    line-height: 1.5 !important;
+    color: #f5f0e8 !important;
+    margin-bottom: 0 !important;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pull-quote p strong {
+    font-style: normal;
+    color: #e8c547;
+  }
+
+  /* Callout box */
+  .callout {
+    border-left: 3px solid var(--accent);
+    padding: 20px 24px;
+    margin: 32px 0;
+    background: var(--highlight);
+  }
+
+  .callout-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .callout p {
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 14px !important;
+    line-height: 1.65 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* System visual */
+  .system-visual {
+    margin: 36px 0;
+    border: 1px solid var(--rule);
+    padding: 28px;
+  }
+
+  .system-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .system-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+
+  .system-row:last-child { margin-bottom: 0; }
+
+  .system-step {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 10px;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .system-arrow { color: var(--accent); font-size: 14px; }
+
+  .system-desc { color: var(--muted); font-size: 11px; }
+
+  /* Footnote */
+  .article-footnote {
+    border-top: 1px solid var(--rule);
+    padding-top: 32px;
+    margin-top: 48px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* Sidebar */
+  .article-sidebar {
+    padding-top: 4px;
+  }
+
+  .sidebar-sticky {
+    position: sticky;
+    top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .sidebar-widget {
+    border: 1px solid var(--rule);
+    padding: 18px;
+  }
+
+  .widget-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .widget-text {
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  .toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .toc-list a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .toc-list a::before {
+    content: '→';
+    color: var(--accent);
+    font-size: 10px;
+  }
+
+  .toc-list a:hover { color: var(--ink); }
+
+  .next-post {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 20px;
+    text-decoration: none;
+    display: block;
+    transition: opacity 0.2s;
+  }
+
+  .next-post:hover { opacity: 0.85; }
+
+  .next-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 8px;
+  }
+
+  .next-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--paper);
+  }
+
+  /* Footer */
+  .article-footer {
+    border-top: 2px solid var(--ink);
+    padding: 28px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .footer-copy {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  @media (max-width: 800px) {
+    .article-hero { grid-template-columns: 1fr; padding: 40px 24px; }
+    .article-hero-aside { display: none; }
+    .article-body { grid-template-columns: 1fr; padding: 40px 24px 60px; }
+    .article-sidebar { display: none; }
+    .pull-quote { margin: 32px -24px; padding: 32px 24px; }
+    nav, .article-footer { padding-left: 24px; padding-right: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-home">Don Lamarr</a>
+  <div class="nav-links">
+    <a href="#">Journal</a>
+    <a href="#">Stack</a>
+    <a href="#">GrowthOS ↗</a>
+  </div>
+</nav>
+
+<article>
+
+  <!-- Hero -->
+  <header class="article-hero">
+    <div>
+      <div class="article-volume">Operator Journal · Volume II</div>
+      <div class="article-series">Post 10 · The Pivot</div>
+      <h1 class="article-title">You Don't Do Business<br>To Get Money.<br><em>You Get Money<br>To Do Business.</em></h1>
+      <p class="article-deck">One sentence heard on a YouTube video. The reason I always ran out of money during the pursuit of profit became instantly clear. I wasn't failing at business — I was running billionaire logic on employee infrastructure.</p>
+      <div class="article-meta-row">
+        <span>Don Evans</span>
+        &nbsp;·&nbsp; 14 min read
+        &nbsp;·&nbsp; Houston, TX → Columbus, OH
+      </div>
+    </div>
+
+    <aside class="article-hero-aside">
+      <div class="aside-block">
+        <div class="aside-label">The Setup</div>
+        <div class="aside-text">Six years leading transformation groups. One year of freelance Webflow income. A trolley ride through downtown Houston with a writing book. Then one YouTube video that reframed everything.</div>
+      </div>
+      <div class="aside-block">
+        <div class="aside-label">Why This Post Exists</div>
+        <div class="aside-text">Because every person who has ever run out of money while chasing profit deserves to understand WHY. It's not execution. It's operating system mismatch.</div>
+      </div>
+    </aside>
+  </header>
+
+  <!-- Body -->
+  <div class="article-body">
+    <div class="article-content">
+
+      <p class="lead">I was sitting somewhere in Houston when I heard eleven words that reorganized my entire understanding of why nothing was working.</p>
+
+      <p>Not "nothing" as in failure. I had income. Webflow clients. SEO work. A year of freelance money that proved I could sell something. But it kept running out. Every time I got momentum — a new client, a good month, a burst of clarity — the money would evaporate and I'd be back at the starting line wondering what I did wrong.</p>
+
+      <p>The video didn't give me a tactic. It gave me a diagnosis.</p>
+
+      <div class="pull-quote">
+        <p>"You don't do business to get money. <strong>You get money to do business.</strong>"</p>
+      </div>
+
+      <p>Oh.</p>
+
+      <p>That was the whole sound I made. Just — oh. Because in that one inversion, six years of struggle made complete sense for the first time.</p>
+
+      <h2>The Real Reason I Always Ran Out</h2>
+
+      <p>I had been treating profit as the source of capital. Which means every business I tried to build was also trying to fund itself from scratch, through me, in real time, while I had four children and a wife and rent and all the other things that money is supposed to cover.</p>
+
+      <p>Every dollar I made had three places it needed to go simultaneously — cover life, fund the next step, and produce enough left over to call it a business. That math doesn't work. It never worked. It was never going to work.</p>
+
+      <div class="callout">
+        <div class="callout-label">The Diagnosis</div>
+        <p>I wasn't bad at business. I was trying to use the output of business — revenue — to fund the input of business — capital. That's backwards. That's why it kept running out. You can't run a car on exhaust.</p>
+      </div>
+
+      <p>The moment I understood that, I could see the whole system from a different elevation. Not the ground level where I'd been living — scrambling from client to client, idea to idea, income to income. From above. Where the structure becomes visible.</p>
+
+      <h2>What I Saw From That Elevation</h2>
+
+      <p>People go to the bank to deposit their checks. Every payday, billions of dollars flow into bank accounts across the country. Those dollars sit there. The bank uses them. Lends them. Moves them.</p>
+
+      <p>What if I went to that same bank — not to deposit, but to ask for that same money — and used it to buy something that was already making money?</p>
+
+      <p>Not to start something. Not to build something from zero. To buy something proven. A car wash. A laundromat. A rental property. Something that produces cash flow the day you own it.</p>
+
+      <div class="system-visual">
+        <div class="system-label">The Billionaire Operating System — Simplified</div>
+        <div class="system-row">
+          <span class="system-step">Credit + Structure</span>
+          <span class="system-arrow">→</span>
+          <span class="system-desc">Access capital without earning it first</span>
+        </div>
+        <div class="system-row">
+          <span class="system-step">Capital</span>
+          <span class="system-arrow">→</span>
+          <span class="system-desc">Buy assets already generating cash flow</span>
+        </div>
+        <div class="system-row">
+          <span class="system-step">Cash Flow</span>
+          <span class="system-arrow">→</span>
+          <span class="system-desc">Stable base income, covers life</span>
+        </div>
+        <div class="system-row">
+          <span class="system-step">Assets as Leverage</span>
+          <span class="system-arrow">→</span>
+          <span class="system-desc">Borrow against what you own to acquire more</span>
+        </div>
+        <div class="system-row">
+          <span class="system-step">Network of Businesses</span>
+          <span class="system-arrow">→</span>
+          <span class="system-desc">Own multiple. Operate none directly.</span>
+        </div>
+      </div>
+
+      <p>I had been trying to run this whole system using only the last layer — building businesses from scratch through personal effort and hoping revenue would compound into something. That's the entrepreneur path. It works for some people. It wasn't working for me.</p>
+
+      <p>Because I wasn't thinking like an entrepreneur. I was thinking like a billionaire who didn't have the infrastructure yet.</p>
+
+      <h2>The Operating System Mismatch</h2>
+
+      <p>This is the diagnosis I wish I'd had ten years earlier. Not because the journey would have been shorter — maybe it wouldn't have been. But because I would have known what I was actually dealing with.</p>
+
+      <p>I don't think like an employee. An employee optimizes for security — steady check, defined role, predictable advancement. I never wanted that even when I needed it.</p>
+
+      <p>I don't think like a contractor. A contractor sells time for money — better rate, more control, but still fundamentally trading hours. I tried this. It worked. It had a ceiling I could see from the first month.</p>
+
+      <p>I don't think like an entrepreneur in the traditional sense — the person who builds one thing from scratch and scales it through force of will and customer revenue. I respect that path enormously. It's just not my wiring.</p>
+
+      <div class="pull-quote">
+        <p>I think like someone who is supposed to <strong>own things</strong> — not operate them, not build them from zero, not trade time for money. <strong>Own them. Let them produce. Repeat.</strong></p>
+      </div>
+
+      <p>The billionaire operating system starts with credit and corporate structure — not because you're trying to look legitimate, but because that's the infrastructure that gives you access to capital without earning it first. That's the foundation everything else is built on.</p>
+
+      <h2>From 580 to the Mission</h2>
+
+      <p>I had a 580 credit score when I heard that video. That's not a good number. But after the video, for the first time, I could see what that number was actually blocking — not a car loan or a credit card, but access to the infrastructure that makes the whole system run.</p>
+
+      <p>So I made it my mission. Not "improve my credit" as a vague self-improvement goal. Get into position. Acquire an aged corporation. Build the structure. Get myself into the class of people who operate the way I was already thinking.</p>
+
+      <p>Not to become someone different. To finally be myself with the right infrastructure under me.</p>
+
+      <div class="callout">
+        <div class="callout-label">The Three Principles From Six Years of Teaching</div>
+        <p>Before this pivot made sense to me, six years of leading transformation groups had taught me three things: people need to see themselves in you before they yield to your guidance. Change is probably impossible — refinement is not. And you cannot teach what you haven't embodied. I didn't know it at the time, but that teaching season was preparing the ground for this seed to land in.</p>
+      </div>
+
+      <h2>Why This Connects to Everything I'm Building Now</h2>
+
+      <p>GrowthOS exists because of this moment. Not directly — there were years of credit building, corporate structuring, Morgan Stanley, Columbus, and a dozen other chapters between this Houston afternoon and the product I'm building today.</p>
+
+      <p>But the diagnostic instinct that powers GrowthOS — diagnose before you intervene, find the root cause before you prescribe the solution, read the logs before you touch the system — that instinct was activated here.</p>
+
+      <p>I diagnosed my own operating system. I found the root cause of why I kept running out of money. I stopped trying to fix the symptom and started building the right infrastructure.</p>
+
+      <p>That's the whole methodology. Applied to myself first. Years before I applied it to a single client.</p>
+
+      <div class="article-footnote">
+        <p>This is Post 10 in the Operator Journal — Volume II: The Foundation. The next post covers the credit build itself — what a 580 to 710 journey actually looks like from the inside, the aged corporation acquisition, and what the structure looks like once it's built. If you found this useful, the most valuable thing you can do is share it with one person who needs the diagnosis.</p>
+        <p style="margin-top:12px;">— Don Evans · Columbus, Ohio · 2026</p>
+      </div>
+
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="article-sidebar">
+      <div class="sidebar-sticky">
+
+        <div class="sidebar-widget">
+          <div class="widget-label">In This Post</div>
+          <ul class="toc-list">
+            <li><a href="#">The Eleven Words</a></li>
+            <li><a href="#">Why I Always Ran Out</a></li>
+            <li><a href="#">What I Saw From Above</a></li>
+            <li><a href="#">The OS Mismatch</a></li>
+            <li><a href="#">From 580 to Mission</a></li>
+            <li><a href="#">Why This Connects</a></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-widget">
+          <div class="widget-label">The Operator Thesis</div>
+          <p class="widget-text" style="font-style:italic; font-size:13px; line-height:1.7;">"In IT we never touch the system until we've read the logs. In marketing everyone touches the system first and reads the logs never."</p>
+        </div>
+
+        <a href="#" class="next-post">
+          <div class="next-label">Next Post →</div>
+          <div class="next-title">The Credit Build — From 580 to 710 and the Aged Corp Acquisition</div>
+        </a>
+
+        <div class="sidebar-widget">
+          <div class="widget-label">About The Author</div>
+          <p class="widget-text">Don Evans is an enterprise IT practitioner building GrowthOS — an AI-powered diagnostic system for DTC brands. Based in Columbus, Ohio.</p>
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+
+</article>
+
+<div class="article-footer">
+  <span class="footer-brand">Don Lamarr</span>
+  <span class="footer-copy">© 2026 · Operator Journal · Columbus, Ohio</span>
+</div>
+
+</body>
+</html>

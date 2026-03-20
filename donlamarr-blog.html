@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Don Lamarr — Operator Journal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f5f0e8;
+    --accent: #c8402a;
+    --muted: #7a7065;
+    --rule: #d4cfc6;
+    --highlight: #f0e6c8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* Header */
+  header {
+    border-bottom: 2px solid var(--ink);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    z-index: 100;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 48px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .site-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .site-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  .masthead {
+    padding: 24px 48px 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+  }
+
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  .masthead-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-left: 2px solid var(--accent);
+    padding-left: 16px;
+    line-height: 1.6;
+  }
+
+  nav {
+    padding: 10px 48px;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  nav a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-decoration: none;
+    color: var(--ink);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--accent); }
+  nav a.active {
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 2px;
+  }
+
+  /* Hero Section */
+  .hero {
+    padding: 64px 48px 48px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 64px;
+    border-bottom: 1px solid var(--rule);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-deck {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 560px;
+    margin-bottom: 28px;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .hero-meta span { color: var(--accent); }
+
+  .hero-sidebar {
+    border-left: 1px solid var(--rule);
+    padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .sidebar-block h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .about-block {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  .about-block strong {
+    font-weight: 500;
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+  }
+
+  /* Post Grid */
+  .posts-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 48px 80px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 40px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .section-header span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Featured post */
+  .post-featured {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+    margin-bottom: 32px;
+    transition: border-color 0.2s;
+    cursor: pointer;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .post-featured:hover { border-color: var(--ink); }
+
+  .post-featured-content {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .post-featured-visual {
+    background: var(--ink);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 320px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .post-featured-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.03) 2px,
+      rgba(255,255,255,0.03) 4px
+    );
+  }
+
+  .post-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.06);
+    position: absolute;
+    top: -20px;
+    right: -10px;
+    line-height: 1;
+  }
+
+  .post-visual-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    position: relative;
+    z-index: 1;
+  }
+
+  .post-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .post-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 2.5vw, 28px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+
+  .post-excerpt {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    flex-grow: 1;
+    margin-bottom: 24px;
+  }
+
+  .post-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .post-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .read-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .read-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* Post grid */
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 32px;
+  }
+
+  .post-card {
+    background: var(--paper);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.2s;
+    cursor: pointer;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .post-card:nth-child(2) { animation-delay: 0.1s; }
+  .post-card:nth-child(3) { animation-delay: 0.2s; }
+
+  .post-card:hover { background: var(--highlight); }
+
+  .post-card .post-eyebrow { margin-bottom: 10px; }
+
+  .post-card .post-title {
+    font-size: clamp(17px, 2vw, 21px);
+    margin-bottom: 12px;
+  }
+
+  .post-card .post-excerpt {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .post-card .post-footer { margin-top: auto; }
+
+  /* Divider post */
+  .post-wide {
+    border: 1px solid var(--rule);
+    padding: 32px 40px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 40px;
+    align-items: center;
+    transition: border-color 0.2s;
+    cursor: pointer;
+    margin-bottom: 4px;
+    animation: fadeUp 0.6s ease both;
+    animation-delay: 0.3s;
+  }
+
+  .post-wide:hover { border-color: var(--ink); }
+
+  .post-wide-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--rule);
+    line-height: 1;
+  }
+
+  .post-wide-content .post-eyebrow { margin-bottom: 8px; }
+  .post-wide-content .post-title { font-size: 22px; margin-bottom: 8px; }
+  .post-wide-content .post-excerpt { font-size: 13px; margin-bottom: 0; }
+
+  /* Manifesto strip */
+  .manifesto {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 64px 48px;
+    margin: 0;
+  }
+
+  .manifesto-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .manifesto-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .manifesto-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .manifesto-quote strong {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .manifesto-right {
+    border-left: 1px solid rgba(255,255,255,0.1);
+    padding-left: 80px;
+  }
+
+  .manifesto-right p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .manifesto-right p:last-child { margin-bottom: 0; }
+
+  .manifesto-right strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+
+  /* Extractor teaser */
+  .extractor-teaser {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 48px 80px;
+  }
+
+  .extractor-card {
+    border: 2px solid var(--ink);
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .extractor-card::after {
+    content: 'COMING SOON';
+    position: absolute;
+    top: 24px;
+    right: -32px;
+    background: var(--accent);
+    color: white;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    padding: 4px 40px;
+    transform: rotate(45deg);
+  }
+
+  .extractor-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .extractor-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .extractor-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 560px;
+  }
+
+  .extractor-visual {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 2;
+    border: 1px solid var(--rule);
+    padding: 20px 24px;
+    min-width: 260px;
+  }
+
+  .extractor-visual .prompt {
+    color: var(--accent);
+  }
+
+  .extractor-visual .response {
+    color: var(--ink);
+    padding-left: 16px;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 2px solid var(--ink);
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .footer-copy {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-links a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  header { animation: fadeUp 0.4s ease both; }
+  .hero { animation: fadeUp 0.5s ease both 0.1s; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-sidebar { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 32px; }
+    .post-featured { grid-template-columns: 1fr; }
+    .post-featured-visual { min-height: 160px; }
+    .post-grid { grid-template-columns: 1fr; }
+    .post-wide { grid-template-columns: 1fr; }
+    .post-wide-num { display: none; }
+    .manifesto-inner { grid-template-columns: 1fr; gap: 40px; }
+    .manifesto-right { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; }
+    .extractor-card { grid-template-columns: 1fr; }
+    .extractor-visual { display: none; }
+    .header-top, .masthead, nav, .posts-section, .extractor-teaser, footer { padding-left: 24px; padding-right: 24px; }
+    .manifesto { padding-left: 24px; padding-right: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <span class="site-label">itsDonLamarr — Operator Journal</span>
+    <span class="site-date">Est. 2025 · Columbus, Ohio</span>
+  </div>
+  <div class="masthead">
+    <h1>Don Lamarr</h1>
+    <div class="masthead-sub">
+      Enterprise IT → AI Builder<br>
+      Documenting the build in public
+    </div>
+  </div>
+  <nav>
+    <a href="#" class="active">Journal</a>
+    <a href="#">Stack</a>
+    <a href="#">About</a>
+    <a href="#">GrowthOS ↗</a>
+  </nav>
+</header>
+
+<!-- Hero / Featured Post -->
+<div class="hero">
+  <div class="hero-main">
+    <div class="hero-eyebrow">Post 01 — The Origin Story</div>
+    <h2 class="hero-title">Why I Left Enterprise IT to Build My Own <em>AI Diagnostic System</em></h2>
+    <p class="hero-deck">Ten years inside systems that never lie — Active Directory, Splunk, RSA SecurID. You read the logs before you touch anything. Then I watched DTC brands spend $40K on ad spend to fix problems that weren't ad problems. That's when I knew I had to build GrowthOS.</p>
+    <div class="hero-meta">
+      <span>Don Evans</span>
+      &nbsp;·&nbsp; Operator Journal &nbsp;·&nbsp; 8 min read
+    </div>
+  </div>
+
+  <aside class="hero-sidebar">
+    <div class="sidebar-block about-block">
+      <h3>About This Journal</h3>
+      <strong>Don Evans</strong>
+      Enterprise IT practitioner turned AI product builder. 10+ years inside Morgan Stanley, Cisco, Active Directory, Splunk. Now building GrowthOS — an AI-powered diagnostic system for DTC brands — from the ground up. Documenting every decision, failure, and framework along the way.
+    </div>
+    <div class="sidebar-block">
+      <h3>Core Thesis</h3>
+      <p style="font-size:13px; line-height:1.7; font-style:italic; color:var(--ink);">"In IT we never touch the system until we've read the logs. In marketing everyone touches the system first and reads the logs never."</p>
+    </div>
+    <div class="sidebar-block">
+      <h3>Topics Covered</h3>
+      <div class="tag-list">
+        <span class="tag">AI Building</span>
+        <span class="tag">Tech Stack</span>
+        <span class="tag">Build vs Buy</span>
+        <span class="tag">DTC</span>
+        <span class="tag">Diagnostics</span>
+        <span class="tag">Operator</span>
+        <span class="tag">GrowthOS</span>
+        <span class="tag">Columbus</span>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- Posts Section -->
+<div class="posts-section">
+
+  <div class="section-header">
+    <h2>Volume I — The Build</h2>
+    <span>5 entries · GrowthOS origin</span>
+  </div>
+
+  <!-- Post 1 Featured -->
+  <div class="post-featured">
+    <div class="post-featured-content">
+      <div>
+        <div class="post-eyebrow">Post 01 · Origin</div>
+        <h3 class="post-title">Why I Left Enterprise IT to Build My Own AI Diagnostic System</h3>
+        <p class="post-excerpt">I spent a decade reading logs before touching systems. Splunk dashboards at 2am. Active Directory audits. RSA token investigations. Enterprise IT teaches you one thing above everything else — diagnose before you intervene. Then I started watching DTC brands throw money at symptoms. Three clients. Same misdiagnosis. Different tools. I had to build something.</p>
+      </div>
+      <div class="post-footer">
+        <span class="post-meta">Origin · 8 min</span>
+        <a href="#" class="read-link">Read Entry →</a>
+      </div>
+    </div>
+    <div class="post-featured-visual">
+      <span class="post-number">01</span>
+      <span class="post-visual-label">The Origin · Where it started</span>
+    </div>
+  </div>
+
+  <!-- Posts 2, 3, 4 grid -->
+  <div class="post-grid">
+
+    <div class="post-card">
+      <div class="post-eyebrow">Post 02 · Build vs Buy</div>
+      <h3 class="post-title">Why I'm Building GrowthOS Instead of Buying a SaaS Stack</h3>
+      <p class="post-excerpt">I priced it out. The off-the-shelf stack to do what GrowthOS does would run $2,400–$3,800/month in licensing before I write a single line of custom logic. Here's the full cost comparison, what each tool does, where it breaks down, and the exact moment I decided to build instead.</p>
+      <div class="post-footer">
+        <span class="post-meta">Build vs Buy · 10 min</span>
+        <a href="#" class="read-link">Read →</a>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-eyebrow">Post 03 · Tech Stack</div>
+      <h3 class="post-title">The Exact Stack I'm Using to Build an AI-Powered Business Diagnostic</h3>
+      <p class="post-excerpt">Local vs cloud. What I'm running where and why. The API layer, the cost breakdown at current stage vs projected scale, the decisions I'd change if starting over, and why the enterprise IT background changed how I think about architecture from day one.</p>
+      <div class="post-footer">
+        <span class="post-meta">Stack · 12 min</span>
+        <a href="#" class="read-link">Read →</a>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-eyebrow">Post 04 · First Test</div>
+      <h3 class="post-title">I Ran GrowthOS on a Real Client. Here's Exactly What Happened.</h3>
+      <p class="post-excerpt">The client said their Shopify store was broken. It wasn't. The diagnostic surfaced a messaging mismatch that three months of tool optimization had completely missed. Before and after. Specific numbers. What the system caught that a human audit would have skipped. What I'd do differently.</p>
+      <div class="post-footer">
+        <span class="post-meta">Case Study · 9 min</span>
+        <a href="#" class="read-link">Read →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Post 5 wide -->
+  <div class="post-wide">
+    <div class="post-wide-num">05</div>
+    <div class="post-wide-content">
+      <div class="post-eyebrow">Post 05 · Vision</div>
+      <h3 class="post-title">Where GrowthOS Is Going — AI, Automation, and the Holding Company Vision</h3>
+      <p class="post-excerpt">Current state honest. Next three builds and why in that order. Where AI fits in the diagnostic layer specifically. The longer vision — not just a consulting tool but a scalable diagnostic product inside a holding company model. What success looks like in 12 months. What could kill it.</p>
+    </div>
+    <div class="post-footer">
+      <span class="post-meta">Vision · 11 min</span>
+      <a href="#" class="read-link">Read Entry →</a>
+    </div>
+  </div>
+
+  <!-- PULL QUOTE DIVIDER -->
+  <div style="margin: 56px 0; padding: 48px; background: var(--ink); color: var(--paper); position: relative; overflow: hidden;">
+    <div style="position:absolute; top:-20px; left:40px; font-family:'Playfair Display',serif; font-size:180px; font-weight:900; color:rgba(255,255,255,0.04); line-height:1; pointer-events:none;">"</div>
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--accent); margin-bottom:20px;">The Pivot — Houston, TX</div>
+    <p style="font-family:'Playfair Display',serif; font-size:clamp(20px,3vw,32px); font-weight:400; font-style:italic; line-height:1.4; max-width:800px; margin-bottom:24px;">
+      "You don't do business to get money. You get money to do business. Oh!! Of course I would always run out of money during the pursuit of profit."
+    </p>
+    <p style="font-size:14px; color:rgba(255,255,255,0.5); max-width:680px; line-height:1.8;">
+      People go to the bank to deposit their checks. I would go to the bank and ask for that same money — to buy something that's <em style="color:rgba(255,255,255,0.8);">already making money.</em> Car wash. Laundromat. Rental income. That one idea, heard on a YouTube video, reframed everything. It's the chapter that changed the direction of this entire journal.
+    </p>
+    <div style="margin-top:28px;">
+      <a href="#" style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--paper); border-bottom:1px solid rgba(255,255,255,0.3); padding-bottom:2px; text-decoration:none;">Read Volume II →</a>
+    </div>
+  </div>
+
+  <!-- VOLUME II HEADER -->
+  <div class="section-header" style="margin-top: 16px;">
+    <h2>Volume II — The Foundation</h2>
+    <span>5 entries · Houston · The pivot years</span>
+  </div>
+
+  <!-- Volume II Post 1 Featured -->
+  <div class="post-featured">
+    <div class="post-featured-visual" style="background: #1a1008;">
+      <span class="post-number" style="color:rgba(255,255,255,0.05);">06</span>
+      <span class="post-visual-label">Houston · The Question</span>
+    </div>
+    <div class="post-featured-content">
+      <div>
+        <div class="post-eyebrow">Post 06 · The Diagnosis</div>
+        <h3 class="post-title">Why Don't I Make Money Every Day? — The Question That Started Everything</h3>
+        <p class="post-excerpt">Four kids. A wife. Houston. Paycheck to paycheck with a decade of skills nobody was buying from me directly. I asked myself one question that most employed people never ask — and the answer was uncomfortable. I wasn't selling anything. I had information. I had no storefront. That diagnosis changed everything.</p>
+      </div>
+      <div class="post-footer">
+        <span class="post-meta">Diagnosis · 9 min</span>
+        <a href="#" class="read-link">Read Entry →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Volume II posts grid -->
+  <div class="post-grid">
+
+    <div class="post-card">
+      <div class="post-eyebrow">Post 07 · First Income</div>
+      <h3 class="post-title">The 20 Ideas I Never Did — And the One That Actually Made Money</h3>
+      <p class="post-excerpt">I had 20 money ideas on my phone. I had done none of them. Maybe ADHD. Maybe stress. But I diagnosed the real constraint — I only had skills. No time. No capital. The one path that worked matched exactly what I actually had: Webflow, Upwork, $700/month from Romega Digital, $350 from ServiceUp. Here's what that first outside income actually unlocked.</p>
+      <div class="post-footer">
+        <span class="post-meta">First Income · 10 min</span>
+        <a href="#" class="read-link">Read →</a>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-eyebrow">Post 08 · The Trolley</div>
+      <h3 class="post-title">I Found My Writing Voice on a Houston Trolley at 40 — Here's the System Behind It</h3>
+      <p class="post-excerpt">I took the bus to WeWork until it got too expensive. Then the trolley became the thing. Clean city rail. Downtown Houston passing by. A book on the art of writing with highlights. Movement created the mental state that produced the breakthrough. I wrote the best article of my life. Turns out I wasn't a bad writer — I was writing without a system.</p>
+      <div class="post-footer">
+        <span class="post-meta">Creativity · 8 min</span>
+        <a href="#" class="read-link">Read →</a>
+      </div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-eyebrow">Post 09 · Six Years</div>
+      <h3 class="post-title">Six Years. Six Groups. What Teaching Human Transformation Taught Me About Why Systems Fail</h3>
+      <p class="post-excerpt">I spent six years leading groups through a transformation journey I had personally undertaken. The most important thing I learned had nothing to do with what I was teaching. Three principles emerged: the mirror principle, the refinement principle, the modeling principle. They're now embedded in every GrowthOS diagnostic.</p>
+      <div class="post-footer">
+        <span class="post-meta">Human Nature · 12 min</span>
+        <a href="#" class="read-link">Read →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Volume II Post 5 wide - The Pivot -->
+  <div class="post-wide">
+    <div class="post-wide-num" style="color: var(--accent); opacity:0.3;">10</div>
+    <div class="post-wide-content">
+      <div class="post-eyebrow" style="color:var(--accent);">Post 10 · The Pivot — Must Read</div>
+      <h3 class="post-title">You Don't Do Business To Get Money — The One Idea That Reframed My Entire Life</h3>
+      <p class="post-excerpt">One YouTube video. Eleven words. The reason I always ran out of money during the pursuit of profit became instantly clear. I wasn't failing at business — I was running billionaire logic on employee infrastructure. From a 580 credit score, I could finally see the whole path. Car wash. Laundromat. Rental income. Aged corporation. This is the chapter the whole journal builds toward.</p>
+    </div>
+    <div class="post-footer">
+      <span class="post-meta">The Pivot · 14 min</span>
+      <a href="#" class="read-link">Read Entry →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Manifesto Strip -->
+<div class="manifesto">
+  <div class="manifesto-inner">
+    <div class="manifesto-left">
+      <div class="manifesto-label">The Operator Thesis</div>
+      <p class="manifesto-quote">"In IT we never touch the system until we've read the logs. In marketing, <strong>everyone touches the system first</strong> and reads the logs never."</p>
+    </div>
+    <div class="manifesto-right">
+      <p>This journal exists because the pattern kept repeating. Brands spending real money optimizing execution while the actual problem sat upstream — undiagnosed, unnamed, invisible to everyone running the campaigns.</p>
+      <p>Enterprise IT taught me a discipline that marketing doesn't have a name for yet. <strong>Diagnose before you intervene.</strong> Read the signal before you adjust the system. Find the root cause before you scale the spend.</p>
+      <p>GrowthOS is the system I'm building to operationalize that discipline. This journal is the unfiltered account of how it gets built — every decision, every tradeoff, every failure, every breakthrough.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Extractor Teaser -->
+<div class="extractor-teaser">
+  <div class="extractor-card">
+    <div>
+      <div class="extractor-label">Product in Development</div>
+      <h3 class="extractor-title">The Content Extractor — Turn Operator Experience Into Publication-Ready Content</h3>
+      <p class="extractor-desc">An AI-powered interview system that asks conversational questions around a validated problem, extracts the specificity, perspective, and experience that makes content rank and get cited — then drafts it into publication-ready format. Built for operators who know things but don't have time to write. Coming as part of the GrowthOS platform.</p>
+    </div>
+    <div class="extractor-visual">
+      <div class="prompt">▸ What was the client's presenting problem?</div>
+      <div class="response">→ They said their Shopify was broken...</div>
+      <br>
+      <div class="prompt">▸ What did the diagnostic actually find?</div>
+      <div class="response">→ Messaging mismatch, not platform...</div>
+      <br>
+      <div class="prompt">▸ What changed after the intervention?</div>
+      <div class="response">→ CVR went from 1.2% to 2.8%...</div>
+      <br>
+      <div class="prompt">▸ Drafting content... ████████░░</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">Don Lamarr</div>
+  <div class="footer-links">
+    <a href="#">LinkedIn</a>
+    <a href="#">GrowthOS</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 itsDonLamarr · Columbus, Ohio</div>
+</footer>
+
+</body>
+</html>
